@@ -1,0 +1,31 @@
+# ==============================================================================
+# Laboratory Work No. 8: application.properties.example (without secrets)
+# Copy this file to application.properties and supply your PostgreSQL credentials
+# ==============================================================================
+
+spring.application.name=university-management-system
+server.port=8080
+
+# Common Hibernate / JPA properties
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+# Database 1: student_db
+spring.datasource.student.url=jdbc:postgresql://localhost:5432/student_db
+spring.datasource.student.username=your_username
+spring.datasource.student.password=your_password
+spring.datasource.student.driver-class-name=org.postgresql.Driver
+
+# Database 2: course_db
+spring.datasource.course.url=jdbc:postgresql://localhost:5432/course_db
+spring.datasource.course.username=your_username
+spring.datasource.course.password=your_password
+spring.datasource.course.driver-class-name=org.postgresql.Driver
+
+# Database 3: grade_db
+spring.datasource.grade.url=jdbc:postgresql://localhost:5432/grade_db
+spring.datasource.grade.username=your_username
+spring.datasource.grade.password=your_password
+spring.datasource.grade.driver-class-name=org.postgresql.Driver

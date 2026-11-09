@@ -1,0 +1,374 @@
+{
+	"info": {
+		"_postman_id": "8f3b6d21-9e77-4a0b-b1a4-9e32a68c07e2",
+		"name": "University Management System - Multi-Database API",
+		"description": "Postman Collection for Laboratory Work No. 8.\nDemonstrates 3 independent PostgreSQL databases (student_db, course_db, grade_db) managed by Spring Boot, including REST CRUD endpoints, cross-database validation, error handling (400, 404, 409), and cross-database transcript aggregation.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Student Module (student_db)",
+			"item": [
+				{
+					"name": "List All Students",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/students",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "students"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Student by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/students/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "students", "1"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Student",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Nikola\",\n  \"lastName\": \"Tesla\",\n  \"email\": \"nikola.tesla@university.edu\",\n  \"major\": \"Electrical Engineering\",\n  \"enrollmentYear\": 2024\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/students",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "students"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Student - 409 Duplicate Email Error",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Duplicate\",\n  \"lastName\": \"User\",\n  \"email\": \"nikola.tesla@university.edu\",\n  \"major\": \"Physics\",\n  \"enrollmentYear\": 2024\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/students",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "students"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Student",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Nikola\",\n  \"lastName\": \"Tesla\",\n  \"email\": \"nikola.tesla@university.edu\",\n  \"major\": \"Applied Physics & Electromagnetism\",\n  \"enrollmentYear\": 2024\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/students/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "students", "1"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Student",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/students/3",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "students", "3"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Course Module (course_db)",
+			"item": [
+				{
+					"name": "List All Courses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/courses",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "courses"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Course by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/courses/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "courses", "1"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"courseName\": \"Distributed Systems & High-Load Architecture\",\n  \"courseCode\": \"CS401\",\n  \"credits\": 4,\n  \"instructor\": \"Dr. Leslie Lamport\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/courses",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "courses"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Course - 409 Duplicate Course Code Error",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"courseName\": \"Another Intro\",\n  \"courseCode\": \"CS401\",\n  \"credits\": 3,\n  \"instructor\": \"Prof. Anon\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/courses",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "courses"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Course",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"courseName\": \"Advanced Distributed Systems\",\n  \"courseCode\": \"CS401\",\n  \"credits\": 5,\n  \"instructor\": \"Dr. Leslie Lamport\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/courses/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "courses", "1"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Course",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/courses/3",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "courses", "3"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3. Grade Module (grade_db & Cross-DB Validation)",
+			"item": [
+				{
+					"name": "Assign Grade (Valid)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentId\": 1,\n  \"courseId\": 1,\n  \"score\": 94.5,\n  \"letterGrade\": \"A\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/grades",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "grades"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Grade - 400 Invalid Score (>100)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentId\": 1,\n  \"courseId\": 1,\n  \"score\": 120.0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/grades",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "grades"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Grade - 404 Nonexistent Student",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentId\": 99999,\n  \"courseId\": 1,\n  \"score\": 85.0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/grades",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "grades"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Grade - 404 Nonexistent Course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentId\": 1,\n  \"courseId\": 99999,\n  \"score\": 85.0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/grades",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "grades"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Grades by Student ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/grades/student/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "grades", "student", "1"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4. Cross-Database Aggregation (Final Challenge)",
+			"item": [
+				{
+					"name": "Get Student Transcript (Aggregated 3 DBs)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/students/1/transcript",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "students", "1", "transcript"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Student Transcript - 404 Not Found",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/students/99999/transcript",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "students", "99999", "transcript"]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
